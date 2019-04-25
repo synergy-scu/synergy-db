@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS `groupings`;
 DROP TABLE IF EXISTS `usages`;
 DROP TABLE IF EXISTS `charts`;
 DROP TABLE IF EXISTS `chartlings`;
+DROP TABLE IF EXISTS `reminders`;
 
 -- Stores information about individual users
 CREATE TABLE `users` (
@@ -14,6 +15,7 @@ CREATE TABLE `users` (
     `name` varchar(100) NOT NULL, 
     `password` binary(60) NOT NULL, 
     `family_size` int(2) DEFAULT NULL, 
+    `phone` varchar(12) DEFAULT NULL,
     `created` datetime(3) NOT NULL, 
     `updated` datetime(3) NOT NULL,
     PRIMARY KEY (`id`)
@@ -84,6 +86,7 @@ CREATE TABLE `usages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE INDEX `idx_usage` ON `usages` (`channelID`);
+CREATE INDEX `idx_datetime` ON `usages` (`time`);
 
 -- Stores chart IDs with their associated metadata
 CREATE TABLE `charts` (
@@ -114,3 +117,14 @@ CREATE TABLE `chartlings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE INDEX `idx_chart` ON `chartlings` (`chartID`);
+
+-- Stores reminders that are associated with each channel
+CREATE TABLE `reminders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `channelID` varchar(36) NOT NULL,
+  `message` varchar(200) NOT NULL,
+  `time` datetime NOT NULL,
+  `created` datetime(3) NOT NULL,
+  `updated` datetime(3) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
