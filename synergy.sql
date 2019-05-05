@@ -121,10 +121,13 @@ CREATE INDEX `idx_chart` ON `chartlings` (`chartID`);
 -- Stores reminders that are associated with each channel
 CREATE TABLE `reminders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `reminderID` varchar(36) NOT NULL,
   `channelID` varchar(36) NOT NULL,
   `message` varchar(200) NOT NULL,
-  `time` datetime NOT NULL,
+  `time` datetime(3) NOT NULL,
   `created` datetime(3) NOT NULL,
   `updated` datetime(3) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE UNIQUE INDEX `idx_reminder` ON `reminders` (`reminderID`);
